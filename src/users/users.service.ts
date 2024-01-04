@@ -3,6 +3,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { PasswordService } from '../auth/password.service';
 import { ChangePasswordInput } from './dto/change-password.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { UserResponseDto } from './dto/response-user-dto';
 
 @Injectable()
 export class UsersService {
@@ -44,5 +45,15 @@ export class UsersService {
       },
       where: { id: userId },
     });
+  }
+
+  async getProfile(user: any): Promise<UserResponseDto> {
+    return {
+      email: user.email,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      role: user.role,
+      posts: user.posts,
+    };
   }
 }

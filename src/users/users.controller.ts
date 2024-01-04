@@ -4,6 +4,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { ChangePasswordInput } from './dto/change-password.input';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { UserResponseDto } from './dto/response-user-dto';
 
 @Controller('users')
 export class UserController {
@@ -12,8 +13,8 @@ export class UserController {
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
-  async getProfile(@Req() req) {
-    return req.user;
+  async getProfile(@Req() req): Promise<UserResponseDto> {
+    return this.usersService.getProfile(req.user);
   }
 
   @ApiBearerAuth('access-token')
