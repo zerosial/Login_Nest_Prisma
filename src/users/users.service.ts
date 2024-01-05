@@ -49,6 +49,7 @@ export class UsersService {
 
   async getProfile(user: any): Promise<UserResponseDto> {
     return {
+      id: user.id,
       email: user.email,
       firstname: user.firstname,
       lastname: user.lastname,
