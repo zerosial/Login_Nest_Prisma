@@ -1,11 +1,10 @@
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { Controller, Get, Post, Body, Param, Query, Req } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CreatePostInput } from './dto/createPost.input';
-import { PostOrder } from './dto/post-order.input';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { PaginationQueryDto } from './dto/pagenation-query.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -15,50 +14,42 @@ export class PostsController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async createPost(@Req() req, @Body() createPostInput: CreatePostInput) {
-    console.log('userId', req);
     return this.prisma.post.create({
       data: {
         published: true,
         title: createPostInput.title,
         content: createPostInput.content,
-        authorId: req.user.id, // `authorId`는 `string` 타입으로 제공됩니다.
+        authorId: req.user.id,
       },
     });
   }
 
   @Get('published')
-  async getPublishedPosts(
-    @Query('after') after: string,
-    @Query('before') before: string,
-    @Query('first') first: number,
-    @Query('last') last: number,
-    @Query('query') query: string,
-    @Query('orderBy') orderBy: PostOrder,
-  ) {
-    const paginationArgs = { after, before, first, last };
+  async getPublishedPosts(@Query() paginationQuery: PaginationQueryDto) {
+    const page = paginationQuery.page;
+    const limit = paginationQuery.limit;
+    const query = paginationQuery.query;
+    const orderBy = paginationQuery.orderBy;
+    const direction = paginationQuery.direction;
 
-    const postsConnection = await findManyCursorConnection(
-      (args) =>
-        this.prisma.post.findMany({
-          include: { author: true },
-          where: {
-            published: true,
-            ...(query && { title: { contains: query, mode: 'insensitive' } }),
-          },
-          orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : undefined,
-          ...args,
-        }),
-      () =>
-        this.prisma.post.count({
-          where: {
-            published: true,
-            ...(query && { title: { contains: query, mode: 'insensitive' } }),
-          },
-        }),
-      paginationArgs,
-    );
+    const offset = (page - 1) * limit;
+    const posts = await this.prisma.post.findMany({
+      skip: offset,
+      take: limit,
+      where: { published: true, title: { contains: query || '' } },
+      orderBy: orderBy ? { [orderBy]: direction } : undefined,
+    });
 
-    return postsConnection;
+    const total = await this.prisma.post.count({
+      where: { published: true, title: { contains: query || '' } },
+    });
+
+    return {
+      data: posts,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 
   @Get(':userId/posts')
