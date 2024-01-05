@@ -107,16 +107,15 @@ npm run start:dev
 npm run start:prod
 ```
 
-NestJS 서버를 위한 GraphQL Playground는 여기에서 사용할 수 있습니다: http://localhost:3000/graphql
-
 **[⬆ 맨 위로](#overview)**
+
 
 ## GraphQL Playground
 
-NestJS 서버를 위한 GraphQL Playground는 여기에서 사용할 수 있습니다: http://localhost:3000/graphql
+NestJS 서버를 위한 GraphQL Playground는 여기에서 사용할 수 있습니다: [GraphQL Playground](http://localhost:3000/graphql)
 
 
-## Rest Api
+## Rest Api Swagger
 
 [RESTful API](http://localhost:3000/api) 문서는 Swagger로 제공됩니다.
 
