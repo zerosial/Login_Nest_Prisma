@@ -25,6 +25,7 @@ yarn install
 ```
 
 ### 2. Docker를 이용한 PostgreSQL
+선택적 
 
 Docker를 이용하여 개발 환경용 PostgreSQL을 설정합니다. [.env.example](./.env.example)을 복사하여 `.env`로 이름을 바꿉니다 - `cp .env.example .env` - 이는 `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`와 같은 PostgreSQL에 필요한 환경 변수를 설정합니다. 변수를 원하는 대로 업데이트하고 강력한 비밀번호를 선택하세요.
 
