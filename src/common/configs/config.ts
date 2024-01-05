@@ -12,7 +12,7 @@ const config: Config = {
     title: 'Nestjs FTW',
     description: 'The nestjs API description',
     version: '1.5',
-    path: 'api',
+    path: 'docs',
   },
   graphql: {
     playgroundEnabled: true,
