@@ -17,6 +17,10 @@ export class Post extends BaseModel {
   @ApiProperty({ description: 'Whether the post is published or not' })
   published: boolean;
 
+  @Field(() => String, { nullable: true })
+  @ApiProperty({ description: 'Image Link', nullable: true })
+  imgUrl?: string | null;
+
   @Field(() => User, { nullable: true })
   @ApiProperty({
     description: 'The author of the post',

@@ -51,8 +51,7 @@ export class UsersService {
     return {
       id: user.id,
       email: user.email,
-      firstname: user.firstname,
-      lastname: user.lastname,
+      username: user.username,
       role: user.role,
       posts: user.posts,
     };

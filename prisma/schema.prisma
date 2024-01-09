@@ -18,8 +18,7 @@ model User {
   updatedAt DateTime @updatedAt
   email     String   @unique
   password  String
-  firstname String?
-  lastname  String?
+  username String?
   posts     Post[]
   role      Role
 }
@@ -31,6 +30,8 @@ model Post {
   published Boolean
   title     String
   content   String?
+  imgUrl    String?
+  location  String?
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
 }

@@ -8,8 +8,7 @@ Table User {
   updatedAt DateTime [not null]
   email String [unique, not null]
   password String [not null]
-  firstname String
-  lastname String
+  username String
   posts Post [not null]
   role Role [not null]
 }
@@ -21,6 +20,8 @@ Table Post {
   published Boolean [not null]
   title String [not null]
   content String
+  imgUrl String
+  location String
   author User
   authorId String
 }

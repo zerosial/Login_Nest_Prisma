@@ -24,12 +24,8 @@ export class User extends BaseModel {
   email: string;
 
   @Field(() => String, { nullable: true })
-  @ApiProperty({ description: 'First name of the user', required: false })
-  firstname?: string;
-
-  @Field(() => String, { nullable: true })
-  @ApiProperty({ description: 'Last name of the user', required: false })
-  lastname?: string;
+  @ApiProperty({ description: 'Name of the user', required: false })
+  username?: string;
 
   @Field(() => Role)
   @ApiProperty({ enum: Role, description: 'User role' })
