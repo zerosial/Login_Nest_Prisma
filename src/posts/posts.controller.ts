@@ -19,6 +19,7 @@ export class PostsController {
         published: true,
         title: createPostInput.title,
         content: createPostInput.content,
+        imgUrl: createPostInput.imgUrl,
         authorId: req.user.id,
       },
     });

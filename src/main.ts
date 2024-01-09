@@ -46,9 +46,9 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, options);
 
     SwaggerModule.setup(swaggerConfig.path || 'api', app, document, {
-      customSiteTitle: 'Backend Generator',
+      customSiteTitle: 'Pinemarket API',
       customfavIcon:
-        'https://avatars.githubusercontent.com/u/6936373?s=200&v=4',
+        'https://avatars.githubusercontent.com/u/153705459?s=200&v=4',
       customJs: [
         'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js',

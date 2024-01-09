@@ -9,9 +9,9 @@ const config: Config = {
   },
   swagger: {
     enabled: true,
-    title: 'Nestjs FTW',
-    description: 'The nestjs API description',
-    version: '1.5',
+    title: 'PineMarket API',
+    description: '당근마켓 형재 파인마켓 Api',
+    version: '0.1',
     path: 'docs',
   },
   graphql: {
@@ -21,7 +21,7 @@ const config: Config = {
     sortSchema: true,
   },
   security: {
-    expiresIn: '2m',
+    expiresIn: '10m',
     refreshIn: '7d',
     bcryptSaltOrRound: 10,
   },
