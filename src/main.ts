@@ -45,6 +45,7 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, options);
 
+    // vercel 배포 시 스웨거 css 강제 인풋설정
     SwaggerModule.setup(swaggerConfig.path || 'api', app, document, {
       customSiteTitle: 'Pinemarket API',
       customfavIcon:
