@@ -29,7 +29,7 @@ model Post {
   updatedAt DateTime @updatedAt
   published Boolean
   title     String
-  content   String?
+  content   String
   imgUrl    String?
   location  String?
   author    User?    @relation(fields: [authorId], references: [id])

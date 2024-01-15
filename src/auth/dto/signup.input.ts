@@ -17,9 +17,5 @@ export class SignupInput {
 
   @Field({ nullable: true }) // GraphQL 데코레이터
   @ApiProperty({ required: false }) // Swagger 데코레이터
-  firstname?: string;
-
-  @Field({ nullable: true }) // GraphQL 데코레이터
-  @ApiProperty({ required: false }) // Swagger 데코레이터
-  lastname?: string;
+  username?: string;
 }
