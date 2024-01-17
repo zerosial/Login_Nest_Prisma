@@ -11,6 +11,8 @@ services:
       - postgres
     env_file:
       - .env
+    networks:
+      - pinemarket_api
 
   postgres:
     image: postgres:15
@@ -22,7 +24,13 @@ services:
       - .env
     volumes:
       - postgres:/var/lib/postgresql/data
+    networks:
+      - pinemarket_api
 
 volumes:
   postgres:
-    name: nest-db
+    name: pinemarket-db
+
+networks:
+  pinemarket_api:
+    external: true

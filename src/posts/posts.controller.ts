@@ -18,6 +18,7 @@ import { PaginationQueryDto } from './dto/pagenation-query.dto';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { CustomRequest } from './dto/postRequest.dto';
+import { ConfigService } from '@nestjs/config';
 
 export const multerConfig = {
   storage: diskStorage({
@@ -34,7 +35,10 @@ export const multerConfig = {
 
 @Controller('posts')
 export class PostsController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
@@ -62,10 +66,9 @@ export class PostsController {
   ) {
     // title과 content는 req.body에서 추출
     const { title, content } = req.body;
+    const hostUrl = this.configService.get('MINIPC_DOMAIN');
 
-    const imgUrl = file
-      ? `${req.protocol}://${req.get('host')}/uploads/${file.filename}`
-      : null;
+    const imgUrl = file ? `${hostUrl}/uploads/${file.filename}` : null;
     return this.prisma.post.create({
       data: {
         published: true,

@@ -19,7 +19,7 @@ Table Post {
   updatedAt DateTime [not null]
   published Boolean [not null]
   title String [not null]
-  content String
+  content String [not null]
   imgUrl String
   location String
   author User
