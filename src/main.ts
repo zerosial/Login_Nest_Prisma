@@ -11,6 +11,7 @@ import type {
 } from './common/configs/config.interface';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -26,6 +27,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.use(cookieParser());
 
   // enable shutdown hook
   app.enableShutdownHooks();
@@ -71,7 +73,10 @@ async function bootstrap() {
 
   // Cors
   if (corsConfig.enabled) {
-    app.enableCors();
+    app.enableCors({
+      credentials: true,
+      origin: true, //origin: 'http://localhost:5173', // 클라이언트 애플리케이션의 URL 임시로 전체 오픈
+    });
   }
 
   await app.listen(process.env.PORT || nestConfig.port || 3000);
