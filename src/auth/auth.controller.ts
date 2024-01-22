@@ -30,7 +30,7 @@ export class AuthController {
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true, // 개발 환경에서는 false로 설정할 수 있음
-      sameSite: 'strict', // 배포 환경이 달라 임시적으로 none (기본은 strict)
+      sameSite: 'none', // 배포 환경이 달라 임시적으로 none (기본은 strict)
       path: '/', // 쿠키 경로 지정
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 예: 1주일 후 만료
     });
@@ -48,7 +48,7 @@ export class AuthController {
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true, // 개발 환경에서는 false로 설정할 수 있음
-      sameSite: 'strict', // 배포 환경이 달라 임시적으로 none (기본은 strict)
+      sameSite: 'none', // 배포 환경이 달라 임시적으로 none (기본은 strict)
       path: '/', // 쿠키 경로 지정
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 예: 1주일 후 만료
     });
@@ -70,12 +70,24 @@ export class AuthController {
     res.cookie('refreshToken', newRefreshToken, {
       httpOnly: true,
       secure: true, // 개발 환경에서는 false로 설정할 수 있음
-      sameSite: 'strict', // 배포 환경이 달라 임시적으로 none (기본은 strict)
+      sameSite: 'none', // 배포 환경이 달라 임시적으로 none (기본은 strict)
       path: '/', // 쿠키 경로 지정
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 예: 1주일 후 만료
     });
 
     return res.status(HttpStatus.OK).json({ accessToken });
+  }
+
+  @Post('logout')
+  async logout(@Res() res: Response) {
+    res.cookie('refreshToken', '', {
+      httpOnly: true,
+      secure: true, // 개발 환경에서는 false로 설정할 수 있음
+      sameSite: 'none', // 배포 환경이 달라 임시적으로 none (기본은 strict)
+      path: '/', // 쿠키 경로 지정
+      expires: new Date(0), // 쿠키 만료 날짜를 과거로 설정하여 삭제
+    });
+    return res.sendStatus(200);
   }
 
   @ApiBearerAuth('access-token')
