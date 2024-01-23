@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
 import { LoginInput } from './dto/login.input';
 import { SignupInput } from './dto/signup.input';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 
 @Controller('auth')
@@ -21,6 +21,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
+  @ApiTags('Auth API')
   async signup(@Body() signupData: SignupInput, @Res() res: Response) {
     signupData.email = signupData.email.toLowerCase();
     const { accessToken, refreshToken } = await this.authService.createUser(
@@ -39,6 +40,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiTags('Auth API')
   async login(@Body() loginData: LoginInput, @Res() res: Response) {
     const { accessToken, refreshToken } = await this.authService.login(
       loginData.email.toLowerCase(),
@@ -57,6 +59,7 @@ export class AuthController {
   }
 
   @Post('refresh-token')
+  @ApiTags('Auth API')
   async refreshToken(@Req() req: Request, @Res() res: Response) {
     console.log('req.cookie', req.cookies);
     const refreshToken = req.cookies['refreshToken'];
@@ -79,6 +82,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @ApiTags('Auth API')
   async logout(@Res() res: Response) {
     res.cookie('refreshToken', '', {
       httpOnly: true,
@@ -88,12 +92,5 @@ export class AuthController {
       expires: new Date(0), // 쿠키 만료 날짜를 과거로 설정하여 삭제
     });
     return res.sendStatus(200);
-  }
-
-  @ApiBearerAuth('access-token')
-  @UseGuards(AuthGuard('jwt'))
-  @Get('profile')
-  async getUser(@Req() req) {
-    return this.authService.validateUser(req.user.id);
   }
 }

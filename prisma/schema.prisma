@@ -30,8 +30,9 @@ model Post {
   published Boolean
   title     String
   content   String
-  imgUrl    String?
+  imgUrls   String[] // 이미지 URL 배열
   location  String?
+  price String
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
 }

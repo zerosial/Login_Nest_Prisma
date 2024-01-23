@@ -20,8 +20,9 @@ Table Post {
   published Boolean [not null]
   title String [not null]
   content String [not null]
-  imgUrl String
+  imgUrls String[] [not null]
   location String
+  price String [not null]
   author User
   authorId String
 }

@@ -13,4 +13,9 @@ export class CreatePostInput {
   @ApiProperty({ description: 'The title of the post' }) // Swagger 데코레이터
   @IsNotEmpty()
   title: string;
+
+  @Field() // GraphQL 데코레이터
+  @ApiProperty({ description: '가격' }) // Swagger 데코레이터
+  @IsNotEmpty()
+  price: string;
 }

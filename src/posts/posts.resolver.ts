@@ -44,6 +44,7 @@ export class PostsResolver {
         published: true,
         title: data.title,
         content: data.content,
+        price: data.price,
         authorId: user.id,
       },
     });

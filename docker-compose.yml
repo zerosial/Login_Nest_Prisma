@@ -11,6 +11,8 @@ services:
       - postgres
     env_file:
       - .env
+    volumes:
+      - nest-uploads:/app/uploads # 여기에 볼륨을 추가
     networks:
       - pinemarket_api
 
@@ -30,6 +32,8 @@ services:
 volumes:
   postgres:
     name: pinemarket-db
+  nest-uploads: # 새 볼륨 정의
+    name: pinemarket-nest-uploads
 
 networks:
   pinemarket_api:

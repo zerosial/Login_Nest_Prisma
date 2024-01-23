@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import config from './common/configs/config';
+import { MulterModule } from '@nestjs/platform-express';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
@@ -22,6 +23,11 @@ import config from './common/configs/config';
           }),
         ],
       },
+    }),
+
+    // Docker 외부 이미지 저장소 volume
+    MulterModule.register({
+      dest: '/app/uploads',
     }),
 
     // vercel 배포를 위한 graphql 비활성화
