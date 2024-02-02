@@ -12,7 +12,7 @@ async function main() {
     data: {
       email: 'lisa@simpson.com',
       username: 'Lisa',
-      password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
+      password: '$2b$10$rKNcrAbZQ1W3N2HBopVEguMpw8D0KMuqb4.dYKaa2KrNWT4mFjvxa', // renag1010!@
       role: 'USER',
       posts: {
         create: {
@@ -35,7 +35,7 @@ async function main() {
       email: 'bart@simpson.com',
       username: 'Bart',
       role: 'ADMIN',
-      password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
+      password: '$2b$10$rKNcrAbZQ1W3N2HBopVEguMpw8D0KMuqb4.dYKaa2KrNWT4mFjvxa', // renag1010!@
       posts: {
         create: [
           {
