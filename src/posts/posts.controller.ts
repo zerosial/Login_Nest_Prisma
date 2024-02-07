@@ -125,16 +125,51 @@ export class PostsController {
     };
   }
 
-  @Get(':userId/posts')
+  @Get(':userId/list')
   @ApiTags('POST API')
   @ApiParam({
     name: 'userId',
     description: '회원 id 입니다 (list에서는 authorId로 표시됩니다.)',
   })
-  async getUserPosts(@Param('userId') userId: string) {
-    return this.prisma.user
-      .findUnique({ where: { id: userId } })
-      .posts({ where: { published: true } });
+  async getUserPosts(
+    @Query() paginationQuery: PaginationQueryDto,
+    @Param('userId') userId: string,
+  ) {
+    const page = paginationQuery.page;
+    const limit = paginationQuery.limit;
+    const query = paginationQuery.query;
+    const orderBy = paginationQuery.orderBy;
+    const direction = paginationQuery.direction;
+
+    const offset = (page - 1) * limit;
+
+    // 사용자의 게시물을 페이징하여 조회
+    const posts = await this.prisma.post.findMany({
+      skip: offset,
+      take: limit,
+      where: {
+        authorId: userId,
+        published: true,
+        title: { contains: query || '' },
+      },
+      orderBy: orderBy ? { [orderBy]: direction } : undefined,
+    });
+
+    // 해당 사용자의 총 게시물 수 조회
+    const total = await this.prisma.post.count({
+      where: {
+        authorId: userId,
+        published: true,
+        title: { contains: query || '' },
+      },
+    });
+
+    return {
+      data: posts,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 
   @Get(':id')
